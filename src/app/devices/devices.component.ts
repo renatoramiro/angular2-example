@@ -1,39 +1,41 @@
 import { Component, OnInit } from '@angular/core';
-import { Http, Headers, RequestOptions } from "@angular/http";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router } from "@angular/router";
+import { LoginService } from "app/shared/login/login.service";
+import { DevicesService } from "app/shared/devices/devices.service";
 
 @Component({
   selector: 'app-devices',
   templateUrl: './devices.component.html',
-  styleUrls: ['./devices.component.css']
+  styleUrls: ['./devices.component.css'],
+  providers: [LoginService, DevicesService]
 })
 export class DevicesComponent implements OnInit {
 
   public devices: Array<any>;
   private data: any;
 
-  constructor(private http: Http, private router: Router, private route: ActivatedRoute) {
+  constructor(private router: Router, private loginService: LoginService,
+      private service: DevicesService) {
     this.devices = [];
-    this.data = JSON.parse(localStorage.getItem('currentUser'));
+  }
+
+  onError(err) {
+    console.error('Something wrong happened here. Sorry!');
+  }
+
+  onSuccess(data) {
+    this.devices = data;
   }
 
   ngOnInit() {
-    let headers = new Headers({
-      'Content-Type': 'application/json',
-      'x-access-token': this.data.token
-    });
-    let options = new RequestOptions({headers: headers});
-    this.http.get('https://fathomless-temple-13471.herokuapp.com/api/v1/devices/' + this.data.user, options)
-        .map(result => result.json())
+    this.service.loadDevices()
         .subscribe(data => {
-          this.devices = data.devices;
-        });
+          this.devices = data;
+        }, this.onError);
   }
 
-  logoff() {
-    // localStorage.removeItem('currentUser');
-    // localStorage.setItem('currentUser', '');
-    localStorage.clear();
+  public logout() {
+    this.loginService.logout();
     this.router.navigate(['/login']);
   }
 

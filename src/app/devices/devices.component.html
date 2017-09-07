@@ -1,10 +1,10 @@
 <h1>Your Devices</h1>
 
 <p>
-  <a [routerLink]="['/device/create']">Add New Device</a> | 
-  <a href (click)="logout()">Logoff</a>
+  <a [routerLink]="['/devices/create']">Add New Device</a> | 
+  <button (click)="logout()">Logoff</button>
 </p>
 
-<span *ngFor="let device of devices">
+<span *ngFor="let device of devices.devices">
   <p>{{device.name}} - {{device.type}} (<b>{{device._id}}</b>)</p>
 </span>

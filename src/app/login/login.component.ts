@@ -1,33 +1,52 @@
-import { Component } from '@angular/core';
-import { Http, Headers, RequestOptions } from "@angular/http";
+import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import 'rxjs/Rx';
+
+import { LoginService } from '../shared/login/login.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [LoginService]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   public input: any;
 
-  constructor(private http: Http, private router: Router) {
+  constructor(private router: Router, private loginService: LoginService) {
     this.input = {username: '', password: ''};
   }
 
-  public login() {
-    if (this.input.username && this.input.password) {
-      let headers = new Headers({'Content-Type': 'application/json'});
-      let options = new RequestOptions({headers: headers});
-      this.http.post('https://fathomless-temple-13471.herokuapp.com/api/v1/login', JSON.stringify(this.input), options)
-          .map(result => result.json())
-          .subscribe(data => {
-            console.log(data);
-            localStorage.setItem('currentUser', JSON.stringify({user: data.currentUser._id, token: data.token}));
-            this.router.navigate(['/devices']);
-          });
+  ngOnInit() {
+    if (this.loginService.isAuthenticated()) {
+      let data = this.loginService.getLocalStorageData();
+      if (data.user && data.token) {
+        this.router.navigate(['/devices']);
+      }
     }
+  }
+
+  onError(error) {
+    console.error(error);
+  }
+
+  public login() {
+    if (this.validateCredentials()) {
+      this.loginService.login(this.input).subscribe(data => {
+        if (data.success) {
+          sessionStorage.setItem('data', data.currentUser._id);
+          sessionStorage.setItem('token', data.token);
+          this.router.navigate(['/devices']);
+        } else {
+          console.error(data.message);
+        }
+      }, this.onError);
+    }
+  }
+
+  private validateCredentials(): boolean {
+    return this.input.username && this.input.password;
   }
 
 }
