@@ -1,3 +1,20 @@
+<h1>Register</h1>
+<form>
+  <label for="name">Name</label>
+  <input type="text" name="name" [(ngModel)]="input.name"><br>
+
+  <label for="email">Email</label>
+  <input type="email" name="email" [(ngModel)]="input.email"><br>
+
+  <label for="username">Username</label>
+  <input type="text" name="uaername" [(ngModel)]="input.username"><br>
+
+  <label for="password">Password</label>
+  <input type="password" name="password" [(ngModel)]="input.password"><br>
+
+  <button (click)="register()">Register</button>
+</form>
+
 <p>
-  register works!
+  <a [routerLink]="['/login']">Login</a>
 </p>

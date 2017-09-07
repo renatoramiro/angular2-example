@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DevicesComponent } from './devices/devices.component';
+import { DeviceComponent } from './device/device.component';
 
 let routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'devices', component: DevicesComponent }
+  { path: 'devices', component: DevicesComponent },
+  { path: 'device/create', component: DeviceComponent }
 ];
 
 @NgModule({
@@ -21,7 +23,8 @@ let routes = [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    DevicesComponent
+    DevicesComponent,
+    DeviceComponent
   ],
   imports: [
     BrowserModule,

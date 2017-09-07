@@ -1,0 +1,15 @@
+<h1>Create new Device</h1>
+
+<form>
+  <label for="name">Name</label>
+  <input type="text" name="name" [(ngModel)]="device.name"><br>
+
+  <label for="type">Type</label>
+  <input type="text" name="type" [(ngModel)]="device.type"><br>
+
+  <button (click)="save()">Save</button>
+</form>
+
+<p>
+  <a [routerLink]="['/devices']">Back</a>
+</p>
