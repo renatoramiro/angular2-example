@@ -1,10 +1,25 @@
-<h1>Your Devices</h1>
+<div class="grid-container list-container">
+  <h1>Meus Dispositivos</h1>
+  <p>
+    <a class="hollow button small" [routerLink]="['/devices/create']">
+      <i class="fi-plus"></i> Adicionar Novo Dispositivo
+    </a>
 
-<p>
-  <a [routerLink]="['/devices/create']">Add New Device</a> | 
-  <button (click)="logout()">Logoff</button>
-</p>
-
-<span *ngFor="let device of devices.devices">
-  <p>{{device.name}} - {{device.type}} (<b>{{device._id}}</b>)</p>
-</span>
+    <a class="hollow button small alert" (click)="logout()">
+      <i class="fi-power"></i> Sair
+    </a>
+  </p>
+  <div class="grid-x grid-margin-x">
+    <div class="cell small-4" *ngFor="let device of devices">
+      <div class="card" style="width: 100%;">
+        <div class="card-divider">
+          <h4>{{device.name}}</h4>
+        </div>
+        <div class="card-section">
+          <p>Tipo: {{device.type}}</p>
+          <p>Criado em: {{device.created_at | date:'dd/MM/yyyy HH:mm:ss'}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

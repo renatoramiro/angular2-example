@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from "@angular/router";
 import 'rxjs/Rx';
 
@@ -12,10 +13,13 @@ import { LoginService } from '../shared/login/login.service';
 })
 export class LoginComponent implements OnInit {
 
-  public input: any;
+  public loginForm: FormGroup;
 
-  constructor(private router: Router, private loginService: LoginService) {
-    this.input = {username: '', password: ''};
+  constructor(private router: Router, private loginService: LoginService, private fb: FormBuilder) {
+    this.loginForm = this.fb.group({
+      'username': [null, Validators.required],
+      'password': [null, Validators.compose([Validators.required, Validators.minLength(8)])]
+    });
   }
 
   ngOnInit() {
@@ -31,9 +35,9 @@ export class LoginComponent implements OnInit {
     console.error(error);
   }
 
-  public login() {
-    if (this.validateCredentials()) {
-      this.loginService.login(this.input).subscribe(data => {
+  public login(credentials) {
+    if (this.validateCredentials(credentials)) {
+      this.loginService.login(credentials).subscribe(data => {
         if (data.success) {
           sessionStorage.setItem('data', data.currentUser._id);
           sessionStorage.setItem('token', data.token);
@@ -45,8 +49,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private validateCredentials(): boolean {
-    return this.input.username && this.input.password;
+  private validateCredentials(data): boolean {
+    return data.username && data.password;
   }
-
 }

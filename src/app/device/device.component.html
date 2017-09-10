@@ -1,15 +1,30 @@
-<h1>Create new Device</h1>
+<form [formGroup]="deviceForm" (ngSubmit)="save(deviceForm.value)">
+  <div class="form-container">
+    <div class="row columns">
+      <h1>Criar Novo Dispositivo</h1>
+      <p>
+        <a [routerLink]="['/devices']">Voltar</a>
+      </p>
 
-<form>
-  <label for="name">Name</label>
-  <input type="text" name="name" [(ngModel)]="device.name"><br>
+      <label for="name">
+        Nome
+        <input type="text" name="name" id="name" formControlName="name">
+      </label>
+      <div *ngIf="!deviceForm.controls['name'].valid && deviceForm.controls['name'].touched">
+        <div class="alert" *ngIf="deviceForm.controls['name'].errors.required">Este campo é requerido.</div>
+        <div class="alert" *ngIf="deviceForm.controls['name'].errors.minlength">Este campo precisa ter pelo menos 3 caracteres.</div>
+      </div>
 
-  <label for="type">Type</label>
-  <input type="text" name="type" [(ngModel)]="device.type"><br>
+      <label for="type">
+        Tipo
+        <input type="text" name="type" id="type" formControlName="type">
+      </label>
+      <div *ngIf="!deviceForm.controls['type'].valid && deviceForm.controls['type'].touched">
+        <div class="alert" *ngIf="deviceForm.controls['type'].errors.required">Este campo é requerido.</div>
+      </div>
 
-  <button (click)="save()">Save</button>
+      <input type="submit" class="button expanded" value="Enviar" [disabled]="!deviceForm.valid">
+    </div>
+  </div>
 </form>
 
-<p>
-  <a [routerLink]="['/devices']">Back</a>
-</p>

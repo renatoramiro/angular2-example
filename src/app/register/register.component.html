@@ -1,20 +1,49 @@
-<h1>Register</h1>
-<form>
-  <label for="name">Name</label>
-  <input type="text" name="name" [(ngModel)]="input.name"><br>
+<form [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)">
+  <div class="form-container">
+    <div class="row columns">
+      <h1>Criar Nova Conta</h1>
 
-  <label for="email">Email</label>
-  <input type="email" name="email" [(ngModel)]="input.email"><br>
+      <p>
+        <a [routerLink]="['/login']">Entrar no Sistema</a>
+      </p>
+      <label for="name">
+        Nome Completo
+        <input type="text" formControlName="name" id="name" name="name">
+      </label>
+      <div class="errors" *ngIf="!registerForm.controls['name'].valid && registerForm.controls['name'].touched">
+        <div class="alert" *ngIf="registerForm.controls['name'].errors.required">Este campo é requerido.</div>
+      </div>
 
-  <label for="username">Username</label>
-  <input type="text" name="uaername" [(ngModel)]="input.username"><br>
+      <label for="email">
+        Email
+        <input type="email" formControlName="email" id="email" name="email">
+      </label>
+      <div class="errors" *ngIf="!registerForm.controls['email'].valid && registerForm.controls['email'].touched">
+        <div class="alert" *ngIf="registerForm.controls['email'].errors.required">Este campo é requerido.</div>
+        <div class="alert" *ngIf="registerForm.controls['email'].errors.email">Digite um email válido.</div>
+      </div>
 
-  <label for="password">Password</label>
-  <input type="password" name="password" [(ngModel)]="input.password"><br>
+      <label for="username">
+        Nome de Usuário
+        <input type="text" formControlName="username" id="username" name="username">
+      </label>
+      <div class="errors" *ngIf="!registerForm.controls['username'].valid && registerForm.controls['username'].touched">
+        <div class="alert" *ngIf="registerForm.controls['username'].errors.required">Este campo é requerido.</div>
+        <div class="alert" *ngIf="registerForm.controls['username'].errors.minlength">Este campo precisa ter pelo menos 3 caracteres.</div>
+        <div class="alert" *ngIf="registerForm.controls['username'].errors.pattern">Digite um nome de usuário válido.</div>
+      </div>
 
-  <button (click)="register()">Register</button>
+      <label for="password">
+        Senha
+        <input type="password" formControlName="password" id="password">
+      </label>
+      <div class="errors" *ngIf="!registerForm.controls['password'].valid && registerForm.controls['password'].touched">
+        <div class="alert" *ngIf="registerForm.controls['password'].errors.required">Este campo é requerido.</div>
+        <div class="alert" *ngIf="registerForm.controls['password'].errors.minlength">Este campo precisa ter pelo menos 8 caracteres.</div>
+      </div>
+
+      <input type="submit" class="button expanded" value="Enviar" [disabled]="!registerForm.valid">
+
+    </div>
+  </div>
 </form>
-
-<p>
-  <a [routerLink]="['/login']">Login</a>
-</p>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import { DatePipe } from '@angular/common';
 import { LoginService } from "app/shared/login/login.service";
 import { DevicesService } from "app/shared/devices/devices.service";
 
@@ -30,7 +31,7 @@ export class DevicesComponent implements OnInit {
   ngOnInit() {
     this.service.loadDevices()
         .subscribe(data => {
-          this.devices = data;
+          this.devices = data['devices'];
         }, this.onError);
   }
 
