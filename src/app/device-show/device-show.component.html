@@ -1,0 +1,12 @@
+<p *ngIf="!device">
+  Loading...
+</p>
+
+<div *ngIf="device" class="grid-container list-container">
+  <h4>{{device.name}}</h4>
+  <p>Tipo: {{device.type}}</p>
+  <p>Criado em: {{device.created_at | date:'dd/MM/yyyy HH:mm:ss'}}</p>
+  <p class="text-right">
+    <a [routerLink]="['/devices']"><i class="fi-arrow-left"></i> Voltar</a>
+  </p>
+</div>

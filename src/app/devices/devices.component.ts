@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import { DatePipe } from '@angular/common';
 import { LoginService } from "app/shared/login/login.service";
 import { DevicesService } from "app/shared/devices/devices.service";
+import { Device } from "app/models/device";
 
 @Component({
   selector: 'app-devices',
@@ -12,8 +12,7 @@ import { DevicesService } from "app/shared/devices/devices.service";
 })
 export class DevicesComponent implements OnInit {
 
-  public devices: Array<any>;
-  private data: any;
+  public devices: Array<Device>;
 
   constructor(private router: Router, private loginService: LoginService,
       private service: DevicesService) {
@@ -22,10 +21,6 @@ export class DevicesComponent implements OnInit {
 
   onError(err) {
     console.error('Something wrong happened here. Sorry!');
-  }
-
-  onSuccess(data) {
-    this.devices = data;
   }
 
   ngOnInit() {

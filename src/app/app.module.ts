@@ -13,13 +13,16 @@ import { DeviceComponent } from './device/device.component';
 
 import { NoopInterceptor } from './shared/util/noop.interceptor';
 import { LoginService } from "app/shared/login/login.service";
+import { SingleDeviceComponent } from './single-device/single-device.component';
+import { DeviceShowComponent } from './device-show/device-show.component';
 
 let routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'devices', component: DevicesComponent },
-  { path: 'devices/create', component: DeviceComponent }
+  { path: 'devices/create', component: DeviceComponent },
+  { path: 'devices/:id', component: DeviceShowComponent }
 ];
 
 @NgModule({
@@ -28,7 +31,9 @@ let routes = [
     LoginComponent,
     RegisterComponent,
     DevicesComponent,
-    DeviceComponent
+    DeviceComponent,
+    SingleDeviceComponent,
+    DeviceShowComponent
   ],
   imports: [
     BrowserModule,

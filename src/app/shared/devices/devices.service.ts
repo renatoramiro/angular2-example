@@ -29,4 +29,9 @@ export class DevicesService {
       .map(this.getResultData);
   }
 
+  show(deviceId): Observable<any> {
+    return this.http.get(this.baseUrl + this.data.user + '/device/' + deviceId)
+      .map(this.getResultData);
+  }
+
 }
